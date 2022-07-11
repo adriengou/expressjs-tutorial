@@ -1,5 +1,5 @@
 async function getRequest() {
-  let response = await fetch("/");
+  let response = await fetch("/get");
   let data = await response.text();
   console.log(data);
 }
@@ -7,41 +7,37 @@ async function getRequest() {
 async function postRequest() {
   const options = {
     method: "POST",
-    body: JSON.stringify("salut"),
+    body: JSON.stringify({ msg: "coucou" }),
+    headers: {
+      //Accept: "application/json",
+      "Content-Type": "application/json",
+    },
   };
 
-  const response = await fetch("/", options);
+  const response = await fetch("/post", options);
   let data = await response.text();
-  console.log(data);
+  console.log(JSON.parse(data));
 }
 
-// getRequest();
-// postRequest();
-
-function ajaxPost() {
-  const postObj = {
-    id: 1,
-    title: "What is AJAX",
-    body: "AJAX stands for Asynchronous JavaScript...",
+async function putRequest() {
+  const obj = {
+    fileName: "putFile.md",
+    content: "# This is a file created by a PUT request from the client",
   };
 
-  let post = JSON.stringify(postObj);
-
-  const url = "/post";
-  let xhr = new XMLHttpRequest();
-
-  xhr.open("POST", url, true);
-  xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-  xhr.send(post);
-
-  xhr.onload = function () {
-    if (xhr.status === 200) {
-      console.log("Post successfully created!");
-    }
-    console.log("coucou");
+  const options = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(obj),
   };
+
+  const response = await fetch("/put", options);
+  let data = await response.text();
+  console.log(JSON.parse(data));
 }
 
 getRequest();
 postRequest();
-//ajaxPost();
+putRequest();
