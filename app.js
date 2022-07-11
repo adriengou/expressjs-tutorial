@@ -1,5 +1,5 @@
 import express from "express";
-import fs from "fs";
+import fh from "./modules/fileHandler.js";
 
 const app = express();
 const port = 3000;
@@ -18,6 +18,7 @@ app.post("/post", function (req, res) {
   res.send(req.body);
 });
 
+//Put request
 app.put("/put", function (req, res) {
   console.log("--------------PUT REQUEST---------------");
   console.log(req.body);
@@ -25,12 +26,17 @@ app.put("/put", function (req, res) {
   const path = "./upload/" + req.body.fileName;
   const content = req.body.content;
 
-  fs.writeFile(path, content, (err) => {
-    if (err) {
-      console.error(err);
-    }
-    // file written successfully
-  });
+  fh.write(path, content);
+
+  res.send(req.body);
+});
+
+//Register POST request
+app.post("/register", function (req, res) {
+  console.log("--------------Register POST REQUEST---------------");
+  console.log(req.body);
+
+  const path = "./users.json";
 
   res.send(req.body);
 });
