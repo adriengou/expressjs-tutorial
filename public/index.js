@@ -38,12 +38,33 @@ async function putRequest() {
   console.log(JSON.parse(data));
 }
 
-async function register() {
+async function register(user, pass) {
   const url = "/register";
 
   const obj = {
-    username: "adrien",
-    password: "N0t 4 v3ry StR0nG p455W0rD",
+    username: user,
+    password: pass,
+  };
+
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(obj),
+  };
+
+  const response = await fetch(url, options);
+  let data = await response.text();
+  console.log(JSON.parse(data));
+}
+
+async function login(user, pass) {
+  const url = "/login";
+
+  const obj = {
+    username: user,
+    password: pass,
   };
 
   const options = {
@@ -61,5 +82,6 @@ async function register() {
 
 //getRequest();
 //postRequest();
-putRequest();
+//putRequest();
 //register();
+//login();
