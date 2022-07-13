@@ -10,6 +10,10 @@ const login = await import(`${__dirname}/modules/login.js`);
 const app = express();
 const port = 3000;
 
+// set the view engine to ejs
+app.set("view engine", "ejs");
+
+//Json middleware
 app.use(express.json());
 
 // Get Request
@@ -37,6 +41,11 @@ app.put("/put", async function (req, res) {
   res.send(req.body);
 });
 
+//Index.html GET request
+app.get("/", function (req, res) {
+  res.render("pages/index");
+});
+
 //Register POST request
 app.post("/register", async function (req, res) {
   console.log("--------------Register POST REQUEST---------------");
@@ -62,6 +71,21 @@ app.post("/login", async function (req, res) {
   let password = req.body.password;
 
   let result = await login.login(username, password);
+  console.log("RESULT: " + result);
+  res.send({
+    body: req.body,
+    result: result,
+  });
+});
+
+//Admin register POST request
+app.post("/admin-register", async function (req, res) {
+  console.log("--------------Amin register POST request---------------");
+  console.log(req.body);
+
+  let password = req.body.password;
+
+  let result = await login.register(username, password);
   console.log("RESULT: " + result);
   res.send({
     body: req.body,
