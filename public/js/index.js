@@ -85,3 +85,5 @@ async function login(user, pass) {
 //putRequest();
 //register();
 //login();
+
+console.log(Date.now() / 1000);
